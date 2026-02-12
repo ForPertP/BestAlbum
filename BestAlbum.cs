@@ -4,7 +4,6 @@ using System.Linq;
 
 public class Solution {
     public int[] solution(string[] genres, int[] plays) {
-        
         Dictionary<string, int> total = new Dictionary<string, int>();
         Dictionary<string, List<Tuple<int, int>>> songs 
             = new Dictionary<string, List<Tuple<int, int>>>();
