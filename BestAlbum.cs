@@ -43,6 +43,34 @@ public class Solution {
 
 public class Solution {
     public int[] solution(string[] genres, int[] plays) {
+        Dictionary<string, int> total = new Dictionary<string, int>();
+        Dictionary<string, List<(int Play, int Index)>> songs 
+            = new Dictionary<string, List<(int Play, int Index)>>();
+
+        for (int i = 0; i < genres.Length; i++) {
+            if (!total.ContainsKey(genres[i])) {
+                total[genres[i]] = 0;
+                songs[genres[i]] = new List<(int Play, int Index)>();
+            }
+            total[genres[i]] += plays[i];
+            songs[genres[i]].Add((plays[i], i));
+        }
+
+        return total
+            .OrderByDescending(x => x.Value)
+            .SelectMany(genre => songs[genre.Key]
+                .OrderByDescending(s => s.Play)
+                .ThenBy(s => s.Index)
+                .Take(2)
+            )
+            .Select(s => s.Index)
+            .ToArray();
+    }
+}
+
+
+public class Solution {
+    public int[] solution(string[] genres, int[] plays) {
         
         Dictionary<string, int> total = new Dictionary<string, int>();
         Dictionary<string, List<Tuple<int, int>>> songs 
